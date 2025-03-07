@@ -49,14 +49,41 @@ const MapVisualization = ({ ufoData, militaryBaseData, usMapData }) => {
     
     // Draw states
     const states = svg.append('g')
-      .selectAll('path')
-      .data(topojson.feature(usMapData, usMapData.objects.states).features)
-      .join('path')
-      .attr('fill', '#f2f2f2')
-      .attr('stroke', '#999')
-      .attr('stroke-width', 0.5)
-      .attr('d', path)
-      .attr('class', 'state');
+    .selectAll('path')
+    .data(topojson.feature(usMapData, usMapData.objects.states).features)
+    .join('path')
+    .attr('fill', '#f2f2f2')
+    .attr('stroke', '#999')
+    .attr('stroke-width', 0.5)
+    .attr('d', path)
+    .attr('class', 'state')
+    .on('mouseover', function(event, d) {
+        const stateName = d.properties.name;
+        const stateCode = d.properties.code;
+        const count = sightingsByState.get(stateCode) || 0;
+        
+        d3.select(this)
+        .attr('stroke', '#333')
+        .attr('stroke-width', 1.5);
+        
+        tooltip
+        .style('opacity', 1)
+        .html(`<strong>${stateName}</strong><br>${count} UFO sightings`)
+        .style('left', (event.pageX + 10) + 'px')
+        .style('top', (event.pageY - 28) + 'px');
+    })
+    .on('mousemove', function(event) {
+        tooltip
+        .style('left', (event.pageX + 10) + 'px')
+        .style('top', (event.pageY - 28) + 'px');
+    })
+    .on('mouseout', function() {
+        d3.select(this)
+        .attr('stroke', '#999')
+        .attr('stroke-width', 0.5);
+        
+        tooltip.style('opacity', 0);
+    });
       
     // Color states based on UFO sighting density
     const sightingsByState = d3.rollup(
@@ -67,7 +94,7 @@ const MapVisualization = ({ ufoData, militaryBaseData, usMapData }) => {
     
     // Color scale for states based on number of sightings
     const colorScale = d3.scaleSequential(d3.interpolateBlues)
-      .domain([0, d3.max(Array.from(sightingsByState.values()))]);
+      .domain([0, d3.max(Array.from(sightingsByState.values())) || 1]);
     
     states.attr('fill', d => {
       const stateName = d.properties.name;
@@ -82,12 +109,14 @@ const MapVisualization = ({ ufoData, militaryBaseData, usMapData }) => {
       .data(ufoData)
       .join('circle')
       .attr('cx', d => {
-        const [x, y] = projection([d.longitude, d.latitude]);
-        return x;
+        const coords = projection([d.longitude, d.latitude]);
+        if (!coords) return null; // Skip this point if projection returns null
+        return coords[0];
       })
       .attr('cy', d => {
-        const [x, y] = projection([d.longitude, d.latitude]);
-        return y;
+        const coords = projection([d.longitude, d.latitude]);
+        if (!coords) return null; // Skip this point if projection returns null
+        return coords[1];
       })
       .attr('r', 3)
       .attr('fill', 'rgba(255, 215, 0, 0.6)')  // Gold color with transparency
@@ -102,8 +131,9 @@ const MapVisualization = ({ ufoData, militaryBaseData, usMapData }) => {
         .data(militaryBaseData)
         .join('path')
         .attr('transform', d => {
-          const [x, y] = projection([d.longitude, d.latitude]);
-          return `translate(${x}, ${y})`;
+          const coords = projection([d.longitude, d.latitude]);
+          if (!coords) return null; // Skip this point if projection returns null
+          return `translate(${coords[0]}, ${coords[1]})`;
         })
         .attr('d', 'M-5,-5 L0,-10 L5,-5 L5,5 L-5,5 Z') // Pentagon shape for military bases
         .attr('fill', 'rgba(220, 20, 60, 0.7)') // Crimson color with transparency

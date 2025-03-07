@@ -2,6 +2,61 @@ import React, { useRef, useEffect, useState } from 'react';
 import * as d3 from 'd3';
 import '../styles/components/StateRankingChart.css';
 
+// Add this state abbreviation to full name mapping
+const stateNameMap = {
+  'AL': 'Alabama',
+  'AK': 'Alaska',
+  'AZ': 'Arizona',
+  'AR': 'Arkansas',
+  'CA': 'California',
+  'CO': 'Colorado',
+  'CT': 'Connecticut',
+  'DE': 'Delaware',
+  'FL': 'Florida',
+  'GA': 'Georgia',
+  'HI': 'Hawaii',
+  'ID': 'Idaho',
+  'IL': 'Illinois',
+  'IN': 'Indiana',
+  'IA': 'Iowa',
+  'KS': 'Kansas',
+  'KY': 'Kentucky',
+  'LA': 'Louisiana',
+  'ME': 'Maine',
+  'MD': 'Maryland',
+  'MA': 'Massachusetts',
+  'MI': 'Michigan',
+  'MN': 'Minnesota',
+  'MS': 'Mississippi',
+  'MO': 'Missouri',
+  'MT': 'Montana',
+  'NE': 'Nebraska',
+  'NV': 'Nevada',
+  'NH': 'New Hampshire',
+  'NJ': 'New Jersey',
+  'NM': 'New Mexico',
+  'NY': 'New York',
+  'NC': 'North Carolina',
+  'ND': 'North Dakota',
+  'OH': 'Ohio',
+  'OK': 'Oklahoma',
+  'OR': 'Oregon',
+  'PA': 'Pennsylvania',
+  'RI': 'Rhode Island',
+  'SC': 'South Carolina',
+  'SD': 'South Dakota',
+  'TN': 'Tennessee',
+  'TX': 'Texas',
+  'UT': 'Utah',
+  'VT': 'Vermont',
+  'VA': 'Virginia',
+  'WA': 'Washington',
+  'WV': 'West Virginia',
+  'WI': 'Wisconsin',
+  'WY': 'Wyoming',
+  'DC': 'District of Columbia'
+};
+
 const StateRankingChart = ({ ufoData }) => {
   const svgRef = useRef();
   const tooltipRef = useRef();
@@ -49,7 +104,7 @@ const StateRankingChart = ({ ufoData }) => {
       .text('Top 10 States by UFO Sightings');
     
     // Set margins
-    const margin = { top: 40, right: 30, bottom: 60, left: 70 };
+    const margin = { top: 40, right: 30, bottom: 60, left: 120 }; // Increased left margin for longer state names
     const innerWidth = dimensions.width - margin.left - margin.right;
     const innerHeight = dimensions.height - margin.top - margin.bottom;
     
@@ -61,7 +116,11 @@ const StateRankingChart = ({ ufoData }) => {
     );
     
     // Convert to array and sort by count descending
-    const stateData = Array.from(stateCounts, ([state, count]) => ({ state, count }))
+    const stateData = Array.from(stateCounts, ([state, count]) => ({
+      state,
+      stateName: stateNameMap[state] || state, // Convert to full state name
+      count
+    }))
       .sort((a, b) => b.count - a.count)
       .slice(0, 10); // Get top 10
     
@@ -71,7 +130,7 @@ const StateRankingChart = ({ ufoData }) => {
       .range([0, innerWidth]);
     
     const yScale = d3.scaleBand()
-      .domain(stateData.map(d => d.state))
+      .domain(stateData.map(d => d.stateName)) // Use the full state name
       .range([0, innerHeight])
       .padding(0.2);
     
@@ -104,14 +163,14 @@ const StateRankingChart = ({ ufoData }) => {
       .join('rect')
       .attr('class', 'bar')
       .attr('x', 0)
-      .attr('y', d => yScale(d.state))
+      .attr('y', d => yScale(d.stateName)) // Use the full state name
       .attr('width', d => xScale(d.count))
       .attr('height', yScale.bandwidth())
       .attr('fill', 'steelblue')
       .on('mouseover', (event, d) => {
         tooltip
           .style('opacity', 1)
-          .html(`<strong>${d.state}</strong>: ${d.count} sightings`)
+          .html(`<strong>${d.stateName}</strong>: ${d.count} sightings`)
           .style('left', (event.pageX + 10) + 'px')
           .style('top', (event.pageY - 28) + 'px');
       })
