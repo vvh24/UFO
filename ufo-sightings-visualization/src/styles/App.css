@@ -1,0 +1,54 @@
+.app {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  header {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  .loading, .error {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 300px;
+    font-size: 20px;
+    color: #666;
+  }
+  
+  .error {
+    color: #d32f2f;
+  }
+  
+  .main-visualization {
+    margin-bottom: 40px;
+  }
+  
+  .supporting-charts {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+  
+  @media (min-width: 768px) {
+    .supporting-charts {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  
+  .chart {
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  footer {
+    margin-top: 50px;
+    text-align: center;
+    font-size: 14px;
+    color: #666;
+  }
