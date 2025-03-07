@@ -47,61 +47,98 @@ const MapVisualization = ({ ufoData, militaryBaseData, usMapData }) => {
     // Create path generator
     const path = d3.geoPath().projection(projection);
     
-    // Draw states
-    const states = svg.append('g')
-    .selectAll('path')
-    .data(topojson.feature(usMapData, usMapData.objects.states).features)
-    .join('path')
-    .attr('fill', '#f2f2f2')
-    .attr('stroke', '#999')
-    .attr('stroke-width', 0.5)
-    .attr('d', path)
-    .attr('class', 'state')
-    .on('mouseover', function(event, d) {
-        const stateName = d.properties.name;
-        const stateCode = d.properties.code;
-        const count = sightingsByState.get(stateCode) || 0;
-        
-        d3.select(this)
-        .attr('stroke', '#333')
-        .attr('stroke-width', 1.5);
-        
-        tooltip
-        .style('opacity', 1)
-        .html(`<strong>${stateName}</strong><br>${count} UFO sightings`)
-        .style('left', (event.pageX + 10) + 'px')
-        .style('top', (event.pageY - 28) + 'px');
-    })
-    .on('mousemove', function(event) {
-        tooltip
-        .style('left', (event.pageX + 10) + 'px')
-        .style('top', (event.pageY - 28) + 'px');
-    })
-    .on('mouseout', function() {
-        d3.select(this)
-        .attr('stroke', '#999')
-        .attr('stroke-width', 0.5);
-        
-        tooltip.style('opacity', 0);
-    });
-      
-    // Color states based on UFO sighting density
+    // Log some debug info about the map data
+    console.log("First feature properties:", topojson.feature(usMapData, usMapData.objects.states).features[0]);
+    
+    // Group UFO data by state
     const sightingsByState = d3.rollup(
       ufoData,
       v => v.length,
       d => d.state
     );
     
+    // Debug: log state codes in UFO data
+    console.log("State codes in UFO data:", Array.from(sightingsByState.keys()));
+    console.log("First few UFO state values:", ufoData.slice(0, 5).map(d => d.state));
+    
+    // Create map of state ID to state code
+    const stateIdToCode = {};
+    topojson.feature(usMapData, usMapData.objects.states).features.forEach(feature => {
+      if (feature.properties && feature.properties.name) {
+        stateIdToCode[feature.id] = feature.properties.name;
+      }
+    });
+    
+    // Map of state names to abbreviations (for matching)
+    const stateNameToAbbr = {
+      'Alabama': 'AL', 'Alaska': 'AK', 'Arizona': 'AZ', 'Arkansas': 'AR', 'California': 'CA',
+      'Colorado': 'CO', 'Connecticut': 'CT', 'Delaware': 'DE', 'Florida': 'FL', 'Georgia': 'GA',
+      'Hawaii': 'HI', 'Idaho': 'ID', 'Illinois': 'IL', 'Indiana': 'IN', 'Iowa': 'IA',
+      'Kansas': 'KS', 'Kentucky': 'KY', 'Louisiana': 'LA', 'Maine': 'ME', 'Maryland': 'MD',
+      'Massachusetts': 'MA', 'Michigan': 'MI', 'Minnesota': 'MN', 'Mississippi': 'MS', 'Missouri': 'MO',
+      'Montana': 'MT', 'Nebraska': 'NE', 'Nevada': 'NV', 'New Hampshire': 'NH', 'New Jersey': 'NJ',
+      'New Mexico': 'NM', 'New York': 'NY', 'North Carolina': 'NC', 'North Dakota': 'ND', 'Ohio': 'OH',
+      'Oklahoma': 'OK', 'Oregon': 'OR', 'Pennsylvania': 'PA', 'Rhode Island': 'RI', 'South Carolina': 'SC',
+      'South Dakota': 'SD', 'Tennessee': 'TN', 'Texas': 'TX', 'Utah': 'UT', 'Vermont': 'VT',
+      'Virginia': 'VA', 'Washington': 'WA', 'West Virginia': 'WV', 'Wisconsin': 'WI', 'Wyoming': 'WY',
+      'District of Columbia': 'DC'
+    };
+    
     // Color scale for states based on number of sightings
     const colorScale = d3.scaleSequential(d3.interpolateBlues)
       .domain([0, d3.max(Array.from(sightingsByState.values())) || 1]);
     
-    states.attr('fill', d => {
-      const stateName = d.properties.name;
-      const stateCode = d.properties.code;
-      const count = sightingsByState.get(stateCode) || 0;
-      return colorScale(count);
-    });
+    // Draw states
+    const states = svg.append('g')
+      .selectAll('path')
+      .data(topojson.feature(usMapData, usMapData.objects.states).features)
+      .join('path')
+      .attr('fill', d => {
+        const stateName = d.properties.name;
+        const stateAbbr = stateNameToAbbr[stateName];
+        const count = sightingsByState.get(stateAbbr) || 0;
+        return colorScale(count);
+      })
+      .attr('stroke', '#999')
+      .attr('stroke-width', 0.5)
+      .attr('d', path)
+      .attr('class', 'state')
+      .on('mouseover', function(event, d) {
+        const stateName = d.properties.name;
+        const stateAbbr = stateNameToAbbr[stateName];
+        
+        // Try to find the correct count by trying different state code formats
+        let count = 0;
+        if (stateAbbr && sightingsByState.has(stateAbbr)) {
+          count = sightingsByState.get(stateAbbr);
+        } else if (stateAbbr && sightingsByState.has(stateAbbr.toLowerCase())) {
+          count = sightingsByState.get(stateAbbr.toLowerCase());
+        } else if (stateName && sightingsByState.has(stateName)) {
+          count = sightingsByState.get(stateName);
+        }
+        
+        d3.select(this)
+          .attr('stroke', '#333')
+          .attr('stroke-width', 1.5);
+          
+        tooltip
+          .style('opacity', 1)
+          .html(`<strong>${stateName}</strong><br>${count.toLocaleString()} UFO sightings`)
+          .style('left', (event.pageX + 10) + 'px')
+          .style('top', (event.pageY - 28) + 'px');
+      })
+      .on('mousemove', function(event) {
+        tooltip
+          .style('left', (event.pageX + 10) + 'px')
+          .style('top', (event.pageY - 28) + 'px');
+      })
+      .on('mouseout', function() {
+        d3.select(this)
+          .attr('stroke', '#999')
+          .attr('stroke-width', 0.5);
+          
+        tooltip.style('opacity', 0);
+      });
     
     // Add UFO sightings
     svg.append('g')
@@ -122,7 +159,31 @@ const MapVisualization = ({ ufoData, militaryBaseData, usMapData }) => {
       .attr('fill', 'rgba(255, 215, 0, 0.6)')  // Gold color with transparency
       .attr('stroke', 'rgba(255, 215, 0, 0.9)')
       .attr('stroke-width', 1)
-      .attr('class', 'ufo-sighting');
+      .attr('class', 'ufo-sighting')
+      .on('mouseover', function(event, d) {
+        d3.select(this)
+          .attr('r', 6)
+          .attr('fill', 'rgba(255, 215, 0, 0.9)');
+        
+        tooltip
+          .style('opacity', 1)
+          .html(`
+            <strong>UFO Sighting</strong><br>
+            Date: ${d.date || d.datetime || 'Unknown'}<br>
+            Location: ${d.city || 'Unknown'}, ${d.state || 'Unknown'}<br>
+            Shape: ${d.shape || 'Unknown'}<br>
+            Duration: ${d.duration || 'N/A'}
+          `)
+          .style('left', (event.pageX + 10) + 'px')
+          .style('top', (event.pageY - 28) + 'px');
+      })
+      .on('mouseout', function() {
+        d3.select(this)
+          .attr('r', 3)
+          .attr('fill', 'rgba(255, 215, 0, 0.6)');
+          
+        tooltip.style('opacity', 0);
+      });
     
     // Add military bases
     if (militaryBaseData.length > 0) {
@@ -139,7 +200,28 @@ const MapVisualization = ({ ufoData, militaryBaseData, usMapData }) => {
         .attr('fill', 'rgba(220, 20, 60, 0.7)') // Crimson color with transparency
         .attr('stroke', 'rgba(220, 20, 60, 0.9)')
         .attr('stroke-width', 1)
-        .attr('class', 'military-base');
+        .attr('class', 'military-base')
+        .on('mouseover', function(event, d) {
+          d3.select(this)
+            .attr('fill', 'rgba(220, 20, 60, 0.9)');
+            
+          tooltip
+            .style('opacity', 1)
+            .html(`
+              <strong>Military Base</strong><br>
+              Name: ${d.name || 'Unknown'}<br>
+              Type: ${d.type || 'N/A'}<br>
+              Branch: ${d.branch || 'N/A'}
+            `)
+            .style('left', (event.pageX + 10) + 'px')
+            .style('top', (event.pageY - 28) + 'px');
+        })
+        .on('mouseout', function() {
+          d3.select(this)
+            .attr('fill', 'rgba(220, 20, 60, 0.7)');
+            
+          tooltip.style('opacity', 0);
+        });
     }
     
     // Add legend

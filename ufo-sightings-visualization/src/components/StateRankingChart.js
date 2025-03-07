@@ -115,14 +115,23 @@ const StateRankingChart = ({ ufoData }) => {
       d => d.state
     );
     
+    // Log state codes to debug
+    console.log("State codes in data for ranking chart:", Array.from(stateCounts.keys()));
+    
     // Convert to array and sort by count descending
-    const stateData = Array.from(stateCounts, ([state, count]) => ({
-      state,
-      stateName: stateNameMap[state] || state, // Convert to full state name
-      count
-    }))
+    const stateData = Array.from(stateCounts, ([state, count]) => {
+      // Ensure state code is uppercase for proper mapping
+      const stateCode = state ? state.toUpperCase() : state;
+      return {
+        state: stateCode,
+        stateName: stateNameMap[stateCode] || stateCode, // Use full name if available
+        count
+      };
+    })
       .sort((a, b) => b.count - a.count)
       .slice(0, 10); // Get top 10
+    
+    console.log("Top 10 states data for chart:", stateData);
     
     // Create scales
     const xScale = d3.scaleLinear()
@@ -140,7 +149,8 @@ const StateRankingChart = ({ ufoData }) => {
     
     // Add axes
     const xAxis = d3.axisBottom(xScale)
-      .ticks(10);
+      .ticks(6)
+      .tickFormat(d3.format(',d')); // Format numbers with commas
     
     g.append('g')
       .attr('transform', `translate(0, ${innerHeight})`)
@@ -163,20 +173,38 @@ const StateRankingChart = ({ ufoData }) => {
       .join('rect')
       .attr('class', 'bar')
       .attr('x', 0)
-      .attr('y', d => yScale(d.stateName)) // Use the full state name
+      .attr('y', d => yScale(d.stateName))
       .attr('width', d => xScale(d.count))
       .attr('height', yScale.bandwidth())
       .attr('fill', 'steelblue')
       .on('mouseover', (event, d) => {
+        // Highlight the bar
+        d3.select(event.currentTarget)
+          .attr('fill', '#3a7ca5');
+        
         tooltip
           .style('opacity', 1)
-          .html(`<strong>${d.stateName}</strong>: ${d.count} sightings`)
+          .html(`<strong>${d.stateName}</strong>: ${d.count.toLocaleString()} sightings`)
           .style('left', (event.pageX + 10) + 'px')
           .style('top', (event.pageY - 28) + 'px');
       })
-      .on('mouseout', () => {
+      .on('mouseout', (event) => {
+        // Restore original bar color
+        d3.select(event.currentTarget)
+          .attr('fill', 'steelblue');
+          
         tooltip.style('opacity', 0);
       });
+    
+    // Add value labels at the end of each bar
+    g.selectAll('.bar-label')
+      .data(stateData)
+      .join('text')
+      .attr('class', 'bar-label')
+      .attr('x', d => xScale(d.count) + 5)
+      .attr('y', d => yScale(d.stateName) + yScale.bandwidth() / 2 + 5)
+      .attr('font-size', '12px')
+      .text(d => d.count.toLocaleString());
     
   }, [ufoData, dimensions]);
   
