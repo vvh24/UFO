@@ -13,32 +13,50 @@ function App() {
   const [error, setError] = useState(null);
   
   // Filter states
-  const [yearRange, setYearRange] = useState([1950, 2023]);
+  const [yearRange, setYearRange] = useState([1950, 2023]); // Default range
   const [selectedStates, setSelectedStates] = useState([]);
   const [showMilitaryBases, setShowMilitaryBases] = useState(true);
   
   useEffect(() => {
     const fetchData = async () => {
       try {
+        console.log("Starting to fetch data...");
+        
         // Load UFO sightings data
+        console.log("Fetching UFO data...");
         const ufoResponse = await fetch('/data/ufo-sightings.csv');
+        if (!ufoResponse.ok) {
+          throw new Error(`Failed to load UFO data: ${ufoResponse.status} ${ufoResponse.statusText}`);
+        }
         const ufoText = await ufoResponse.text();
+        console.log("UFO data sample:", ufoText.substring(0, 200));
         const processedUFOData = processUFOData(ufoText);
         setUfoData(processedUFOData);
         
-        // Load military bases data
-        const basesResponse = await fetch('/data/military-bases.csv');
+        // Load military bases data - using expanded dataset
+        console.log("Fetching expanded military bases data...");
+        const basesResponse = await fetch('/data/military-bases-expanded.csv');
+        if (!basesResponse.ok) {
+          throw new Error(`Failed to load military bases data: ${basesResponse.status} ${basesResponse.statusText}`);
+        }
         const basesText = await basesResponse.text();
+        console.log("Military bases data sample:", basesText.substring(0, 200));
         const processedBaseData = processMilitaryBaseData(basesText);
         setMilitaryBaseData(processedBaseData);
         
         // Load US map data
+        console.log("Fetching US map data...");
         const mapResponse = await fetch('/data/us-states.json');
+        if (!mapResponse.ok) {
+          throw new Error(`Failed to load US map data: ${mapResponse.status} ${mapResponse.statusText}`);
+        }
         const mapData = await mapResponse.json();
         setUsMapData(mapData);
         
+        console.log("All data loaded successfully!");
         setLoading(false);
       } catch (err) {
+        console.error("Error loading data:", err);
         setError('Failed to load data: ' + err.message);
         setLoading(false);
       }
@@ -46,6 +64,18 @@ function App() {
     
     fetchData();
   }, []);
+  
+  const handleYearRangeChange = (range) => {
+    setYearRange(range);
+  };
+  
+  const handleStateSelection = (states) => {
+    setSelectedStates(states);
+  };
+  
+  const toggleMilitaryBases = () => {
+    setShowMilitaryBases(!showMilitaryBases);
+  };
   
   // Filter data based on selected filters
   const filteredUFOData = ufoData.filter(sighting => {
