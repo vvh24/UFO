@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.css": "/UFO/static/css/main.22fa1222.chunk.css",
+    "main.js": "/UFO/static/js/main.d2239525.chunk.js",
+    "main.js.map": "/UFO/static/js/main.d2239525.chunk.js.map",
+    "runtime~main.js": "/UFO/static/js/runtime~main.8c1c7444.js",
+    "runtime~main.js.map": "/UFO/static/js/runtime~main.8c1c7444.js.map",
+    "static/js/2.e36f0c12.chunk.js": "/UFO/static/js/2.e36f0c12.chunk.js",
+    "static/js/2.e36f0c12.chunk.js.map": "/UFO/static/js/2.e36f0c12.chunk.js.map",
+    "static/js/3.7b0de3fe.chunk.js": "/UFO/static/js/3.7b0de3fe.chunk.js",
+    "static/js/3.7b0de3fe.chunk.js.map": "/UFO/static/js/3.7b0de3fe.chunk.js.map",
+    "index.html": "/UFO/index.html",
+    "precache-manifest.034b0da8bd4e6422ce8c6442e2b05da1.js": "/UFO/precache-manifest.034b0da8bd4e6422ce8c6442e2b05da1.js",
+    "service-worker.js": "/UFO/service-worker.js",
+    "static/css/main.22fa1222.chunk.css.map": "/UFO/static/css/main.22fa1222.chunk.css.map"
+  }
+}
