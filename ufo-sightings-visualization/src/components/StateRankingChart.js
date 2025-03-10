@@ -54,7 +54,25 @@ const stateNameMap = {
   'WV': 'West Virginia',
   'WI': 'Wisconsin',
   'WY': 'Wyoming',
-  'DC': 'District of Columbia'
+  'DC': 'District of Columbia',
+  // Add potential missing territories/regions
+  'PR': 'Puerto Rico',
+  'GU': 'Guam',
+  'VI': 'Virgin Islands',
+  'AS': 'American Samoa',
+  'MP': 'Northern Mariana Islands',
+  // Canadian provinces that might be in the data
+  'BC': 'British Columbia',
+  'ON': 'Ontario',
+  'QC': 'Quebec',
+  'AB': 'Alberta',
+  // Add common variations or potential miscodings
+  'Wa': 'Washington',
+  'Ca': 'California',
+  'Tx': 'Texas',
+  'Fl': 'Florida',
+  'Ny': 'New York',
+  '': 'Unknown Location'
 };
 
 const StateRankingChart = ({ ufoData }) => {
@@ -122,16 +140,27 @@ const StateRankingChart = ({ ufoData }) => {
     const stateData = Array.from(stateCounts, ([state, count]) => {
       // Ensure state code is uppercase for proper mapping
       const stateCode = state ? state.toUpperCase() : state;
+      
+      // Log each state code to identify the missing one
+      console.log("Processing state:", state, "count:", count);
+      
+      // Add fallback for the unnamed state
+      let stateName = stateNameMap[stateCode];
+      if (!stateName) {
+        console.warn("Could not find state name for code:", stateCode);
+        stateName = stateCode || "Unknown State";
+      }
+      
       return {
         state: stateCode,
-        stateName: stateNameMap[stateCode] || stateCode, // Use full name if available
+        stateName: stateName, 
         count
       };
     })
       .sort((a, b) => b.count - a.count)
       .slice(0, 10); // Get top 10
     
-    console.log("Top 10 states data for chart:", stateData);
+    console.log("Final top 10 states data:", stateData);
     
     // Create scales
     const xScale = d3.scaleLinear()
