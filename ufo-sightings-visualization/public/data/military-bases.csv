@@ -1,11 +1,102 @@
 name,branch,type,latitude,longitude
-Andrews Air Force Base,Air Force,Air Force Base,38.8118,-76.8670
 Fort Bragg,Army,Army Base,35.1409,-79.0083
 Naval Station Norfolk,Navy,Naval Base,36.9489,-76.3030
-Camp Pendleton,Marines,Marine Corps Base,33.3152,-117.3147
-McGuire Air Force Base,Air Force,Air Force Base,40.0321,-74.5921
+Joint Base Lewis-McChord,Joint,Joint Base,47.1157,-122.5577
 Fort Hood,Army,Army Base,31.1348,-97.7951
-Naval Base San Diego,Navy,Naval Base,32.6809,-117.1305
-Vandenberg Air Force Base,Air Force,Air Force Base,34.7420,-120.5724
+Eglin Air Force Base,Air Force,Air Force Base,30.4829,-86.5352
+Fort Campbell,Army,Army Base,36.6653,-87.4755
 Fort Benning,Army,Army Base,32.3469,-84.9613
+Naval Base San Diego,Navy,Naval Base,32.6809,-117.1305
+Camp Pendleton,Marines,Marine Corps Base,33.3152,-117.3147
+Fort Bliss,Army,Army Base,31.8124,-106.4223
+Joint Base San Antonio,Joint,Joint Base,29.4815,-98.4361
+Marine Corps Base Quantico,Marines,Marine Corps Base,38.5207,-77.2991
+Joint Base Andrews,Joint,Joint Base,38.8111,-76.8671
+Naval Station Great Lakes,Navy,Naval Base,42.3166,-87.8343
+Camp Lejeune,Marines,Marine Corps Base,34.6077,-77.3421
+Fort Carson,Army,Army Base,38.7423,-104.7865
 Nellis Air Force Base,Air Force,Air Force Base,36.2359,-115.0643
+Fort Stewart,Army,Army Base,31.8691,-81.6089
+Joint Base Pearl Harbor-Hickam,Joint,Joint Base,21.3294,-157.9552
+Naval Base Kitsap,Navy,Naval Base,47.7273,-122.6962
+Fort Gordon,Army,Army Base,33.4052,-82.1349
+Fort Meade,Army,Army Base,39.1086,-76.7536
+Fort Riley,Army,Army Base,39.0858,-96.8145
+Wright-Patterson Air Force Base,Air Force,Air Force Base,39.8232,-84.0483
+Fort Drum,Army,Army Base,44.0509,-75.7698
+Fort Sill,Army,Army Base,34.6681,-98.4669
+Marine Corps Air Station Miramar,Marines,Marine Corps Air Station,32.8788,-117.1431
+Naval Air Station Pensacola,Navy,Naval Air Station,30.3527,-87.3086
+Joint Base Elmendorf-Richardson,Joint,Joint Base,61.2541,-149.6818
+Fort Knox,Army,Army Base,37.9211,-85.9571
+Naval Air Station Jacksonville,Navy,Naval Air Station,30.2350,-81.6752
+Shaw Air Force Base,Air Force,Air Force Base,33.9724,-80.4736
+Fort Huachuca,Army,Army Base,31.5587,-110.3398
+Naval Station Mayport,Navy,Naval Base,30.3951,-81.4089
+Davis-Monthan Air Force Base,Air Force,Air Force Base,32.1651,-110.8830
+Fort Lee,Army,Army Base,37.2516,-77.3383
+Offutt Air Force Base,Air Force,Air Force Base,41.1154,-95.9138
+Marine Corps Air Station Cherry Point,Marines,Marine Corps Air Station,34.9005,-76.8809
+Naval Base Coronado,Navy,Naval Base,32.6952,-117.1711
+Fort Polk,Army,Army Base,31.0445,-93.1866
+Hill Air Force Base,Air Force,Air Force Base,41.1172,-111.9711
+Lackland Air Force Base,Air Force,Air Force Base,29.3880,-98.5957
+Naval Station Everett,Navy,Naval Base,48.0033,-122.2144
+Fort Leonard Wood,Army,Army Base,37.7280,-92.1273
+Joint Base Charleston,Joint,Joint Base,32.8980,-80.0405
+Marine Corps Base Hawaii,Marines,Marine Corps Base,21.4438,-157.7493
+Naval Air Station Oceana,Navy,Naval Air Station,36.8188,-76.0334
+Fort Jackson,Army,Army Base,34.0613,-80.9699
+Naval Base Point Loma,Navy,Naval Base,32.6819,-117.2359
+Tinker Air Force Base,Air Force,Air Force Base,35.4150,-97.3868
+Naval Air Station Patuxent River,Navy,Naval Air Station,38.2853,-76.4114
+Naval Base Ventura County,Navy,Naval Base,34.1878,-119.2060
+Joint Base McGuire-Dix-Lakehurst,Joint,Joint Base,40.0321,-74.5921
+Peterson Air Force Base,Air Force,Air Force Base,38.8268,-104.7020
+Naval Station Rota,Navy,Naval Base,36.6256,-6.3436
+Kadena Air Base,Air Force,Air Force Base,26.3551,127.7677
+Schofield Barracks,Army,Army Base,21.4989,-158.0637
+Fort Irwin,Army,Army Base,35.2627,-116.6845
+Scott Air Force Base,Air Force,Air Force Base,38.5431,-89.8518
+Vandenberg Air Force Base,Air Force,Air Force Base,34.7420,-120.5724
+Naval Air Station Key West,Navy,Naval Air Station,24.5751,-81.6885
+Keesler Air Force Base,Air Force,Air Force Base,30.4105,-88.9240
+Fort Wainwright,Army,Army Base,64.8326,-147.6454
+Fort Eustis,Army,Army Base,37.1550,-76.5795
+Naval Air Station Lemoore,Navy,Naval Air Station,36.3332,-119.9512
+Marine Corps Air Station Beaufort,Marines,Marine Corps Air Station,32.4731,-80.7196
+Fort Leavenworth,Army,Army Base,39.3604,-94.9706
+Joint Base Myer-Henderson Hall,Joint,Joint Base,38.8810,-77.0819
+Maxwell Air Force Base,Air Force,Air Force Base,32.3795,-86.3588
+Naval Base Guam,Navy,Naval Base,13.4550,144.6757
+Kirtland Air Force Base,Air Force,Air Force Base,35.0431,-106.6130
+Naval Station Newport,Navy,Naval Base,41.5261,-71.3267
+Robins Air Force Base,Air Force,Air Force Base,32.6401,-83.5919
+Naval Air Station Fallon,Navy,Naval Air Station,39.4199,-118.7014
+Moody Air Force Base,Air Force,Air Force Base,30.9675,-83.1934
+Naval Air Station Whidbey Island,Navy,Naval Air Station,48.3415,-122.6566
+Fort Rucker,Army,Army Base,31.3475,-85.7150
+Andersen Air Force Base,Air Force,Air Force Base,13.5824,144.9330
+Fort McCoy,Army,Army Base,44.0128,-90.6788
+Naval Base New London,Navy,Naval Base,41.3548,-72.0858
+Naval Weapons Station Seal Beach,Navy,Naval Weapons Station,33.7520,-118.0841
+Fort Detrick,Army,Army Base,39.4376,-77.4308
+Little Rock Air Force Base,Air Force,Air Force Base,34.9159,-92.1488
+Naval Air Station Corpus Christi,Navy,Naval Air Station,27.7022,-97.2907
+Marine Corps Base Camp Lejeune,Marines,Marine Corps Base,34.6785,-77.3463
+Naval Air Station Joint Reserve Base Fort Worth,Navy,Naval Air Station,32.7887,-97.4415
+Patrick Air Force Base,Air Force,Air Force Base,28.2348,-80.6098
+Naval Air Station Joint Reserve Base New Orleans,Navy,Naval Air Station,29.8257,-90.0352
+Barksdale Air Force Base,Air Force,Air Force Base,32.5018,-93.6633
+Minot Air Force Base,Air Force,Air Force Base,48.4156,-101.3577
+Beale Air Force Base,Air Force,Air Force Base,39.1366,-121.4368
+Luke Air Force Base,Air Force,Air Force Base,33.5359,-112.3831
+Fort Hunter Liggett,Army,Army Base,35.9752,-121.2296
+Dyess Air Force Base,Air Force,Air Force Base,32.4264,-99.8564
+McConnell Air Force Base,Air Force,Air Force Base,37.6215,-97.2683
+Mountain Home Air Force Base,Air Force,Air Force Base,43.0436,-115.8665
+Travis Air Force Base,Air Force,Air Force Base,38.2680,-121.9346
+Sheppard Air Force Base,Air Force,Air Force Base,33.9863,-98.5040
+Marine Corps Air Station Yuma,Marines,Marine Corps Air Station,32.6566,-114.6160
+Arnold Air Force Base,Air Force,Air Force Base,35.3929,-86.0867
+Naval Air Station Meridian,Navy,Naval Air Station,32.5521,-88.5557
