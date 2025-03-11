@@ -47,29 +47,7 @@ const MapVisualization = ({ ufoData, militaryBaseData, usMapData }) => {
     // Create path generator
     const path = d3.geoPath().projection(projection);
     
-    // Log some debug info about the map data
-    console.log("First feature properties:", topojson.feature(usMapData, usMapData.objects.states).features[0]);
-    
-    // Group UFO data by state
-    const sightingsByState = d3.rollup(
-      ufoData,
-      v => v.length,
-      d => d.state
-    );
-    
-    // Debug: log state codes in UFO data
-    console.log("State codes in UFO data:", Array.from(sightingsByState.keys()));
-    console.log("First few UFO state values:", ufoData.slice(0, 5).map(d => d.state));
-    
-    // Create map of state ID to state code
-    const stateIdToCode = {};
-    topojson.feature(usMapData, usMapData.objects.states).features.forEach(feature => {
-      if (feature.properties && feature.properties.name) {
-        stateIdToCode[feature.id] = feature.properties.name;
-      }
-    });
-    
-    // Map of state names to abbreviations (for matching)
+    // Map of state names to abbreviations
     const stateNameToAbbr = {
       'Alabama': 'AL', 'Alaska': 'AK', 'Arizona': 'AZ', 'Arkansas': 'AR', 'California': 'CA',
       'Colorado': 'CO', 'Connecticut': 'CT', 'Delaware': 'DE', 'Florida': 'FL', 'Georgia': 'GA',
@@ -84,19 +62,40 @@ const MapVisualization = ({ ufoData, militaryBaseData, usMapData }) => {
       'District of Columbia': 'DC'
     };
     
-    // Color scale for states based on number of sightings
+    // Group data by state to count sightings per state
+    const sightingsByState = d3.rollup(
+      ufoData,
+      v => v.length,
+      d => d.state ? d.state.toUpperCase() : "Unknown"
+    );
+    
+    // Log state codes for debugging
+    console.log("State codes in UFO data:", Array.from(sightingsByState.keys()));
+    console.log("First few UFO state values:", ufoData.slice(0, 5).map(d => d.state));
+    
+    // Create color scale for states
     const colorScale = d3.scaleSequential(d3.interpolateBlues)
       .domain([0, d3.max(Array.from(sightingsByState.values())) || 1]);
     
-    // Draw states
+    // Draw states with color coding
     const states = svg.append('g')
       .selectAll('path')
       .data(topojson.feature(usMapData, usMapData.objects.states).features)
       .join('path')
       .attr('fill', d => {
+        // Try different state code formats to match with UFO data
         const stateName = d.properties.name;
         const stateAbbr = stateNameToAbbr[stateName];
-        const count = sightingsByState.get(stateAbbr) || 0;
+        
+        // Try to find sightings count using state abbreviation
+        let count = 0;
+        if (stateAbbr && sightingsByState.has(stateAbbr)) {
+          count = sightingsByState.get(stateAbbr);
+        } else if (stateAbbr && sightingsByState.has(stateAbbr.toLowerCase())) {
+          count = sightingsByState.get(stateAbbr.toLowerCase());
+        }
+        
+        // Return color based on count
         return colorScale(count);
       })
       .attr('stroke', '#999')
@@ -224,12 +223,62 @@ const MapVisualization = ({ ufoData, militaryBaseData, usMapData }) => {
         });
     }
     
-    // Add legend
-    const legend = svg.append('g')
+    // Add color legend for states
+    const legendWidth = 200;
+    const legendHeight = 15;
+    const legendX = dimensions.width - legendWidth - 20;
+    const legendY = dimensions.height - 100;
+
+    const legendScale = d3.scaleLinear()
+      .domain([0, d3.max(Array.from(sightingsByState.values()))])
+      .range([0, legendWidth]);
+      
+    const legendAxis = d3.axisBottom(legendScale)
+      .ticks(5)
+      .tickFormat(d3.format(",.0f"));
+
+    // Create gradient for legend
+    const defs = svg.append('defs');
+    const gradient = defs.append('linearGradient')
+      .attr('id', 'sightings-gradient')
+      .attr('x1', '0%')
+      .attr('y1', '0%')
+      .attr('x2', '100%')
+      .attr('y2', '0%');
+
+    gradient.selectAll('stop')
+      .data([0, 0.2, 0.4, 0.6, 0.8, 1])
+      .join('stop')
+      .attr('offset', d => d * 100 + '%')
+      .attr('stop-color', d => colorScale(d * d3.max(Array.from(sightingsByState.values()))));
+
+    // Add legend rectangle with gradient
+    svg.append('rect')
+      .attr('x', legendX)
+      .attr('y', legendY)
+      .attr('width', legendWidth)
+      .attr('height', legendHeight)
+      .style('fill', 'url(#sightings-gradient)');
+
+    // Add legend axis
+    svg.append('g')
+      .attr('transform', `translate(${legendX}, ${legendY + legendHeight})`)
+      .call(legendAxis)
+      .attr('font-size', '10px');
+
+    // Add legend title
+    svg.append('text')
+      .attr('x', legendX)
+      .attr('y', legendY - 5)
+      .attr('font-size', '12px')
+      .text('UFO Sightings by State');
+    
+    // Add main legend with UFO and military base symbols
+    const mainLegend = svg.append('g')
       .attr('transform', `translate(20, ${dimensions.height - 80})`);
       
     // UFO sightings legend
-    legend.append('circle')
+    mainLegend.append('circle')
       .attr('cx', 10)
       .attr('cy', 10)
       .attr('r', 5)
@@ -237,21 +286,21 @@ const MapVisualization = ({ ufoData, militaryBaseData, usMapData }) => {
       .attr('stroke', 'rgba(255, 215, 0, 0.9)')
       .attr('stroke-width', 1);
       
-    legend.append('text')
+    mainLegend.append('text')
       .attr('x', 25)
       .attr('y', 15)
       .text('UFO Sighting')
       .attr('font-size', '12px');
       
     // Military base legend  
-    legend.append('path')
+    mainLegend.append('path')
       .attr('transform', 'translate(10, 40)')
       .attr('d', 'M-4,-4 L0,-8 L4,-4 L4,4 L-4,4 Z')
       .attr('fill', 'rgba(220, 20, 60, 0.7)')
       .attr('stroke', 'rgba(220, 20, 60, 0.9)')
       .attr('stroke-width', 1);
       
-    legend.append('text')
+    mainLegend.append('text')
       .attr('x', 25)
       .attr('y', 45)
       .text('Military Base')
