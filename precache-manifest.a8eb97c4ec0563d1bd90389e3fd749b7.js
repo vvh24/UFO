@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "482519554ecfee0fcec1b89a463afc14",
+    "revision": "b9a65a07145f79d9f4983eb763d0770a",
     "url": "/UFO/index.html"
   },
   {
-    "revision": "c82c9c9f6f59e78d45cc",
+    "revision": "b54901fcd2d3e9bdb5af",
     "url": "/UFO/static/css/main.22fa1222.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/UFO/static/js/3.7b0de3fe.chunk.js"
   },
   {
-    "revision": "c82c9c9f6f59e78d45cc",
-    "url": "/UFO/static/js/main.b0edaeb9.chunk.js"
+    "revision": "b54901fcd2d3e9bdb5af",
+    "url": "/UFO/static/js/main.e5049e7a.chunk.js"
   },
   {
     "revision": "73dbff729e0e7b1b9efc",
