@@ -4,14 +4,13 @@ IS219 Midterm Project - Spring 2025
     Is there a correlation between UFO sighting reports and the locations of US military bases, and how have these sighting patterns evolved over time?
 ## Project Overview
 
-This visualization allows users to explore decades of UFO sighting data alongside the locations of US military bases, presenting a unique opportunity to examine potential correlations between these phenomena.
+Explore decades of UFO sighting data alongside the locations of US military bases to examine potential correlations between these phenomena.
 
 ### Key Features
 
 - **Interactive US Map Visualization**
-  - Dynamic rendering of UFO sightings as data points
+  - Dynamic UFO sightings as data points
   - Military base locations displayed as distinctive markers
-  - Color-coded states based on sighting density
   - Tooltip information on hover for states, sightings, and bases
 
 - **Supporting Visualizations**
@@ -49,13 +48,6 @@ The visualization reveals several interesting patterns:
 - There appears to be a higher density of sightings in coastal regions and areas with significant military presence
 - Sighting reports have increased dramatically in recent decades, particularly since the 1990s
 - Urban areas generally show higher concentrations of reports, but this may be influenced by population density
-
-## Future Enhancements
-
-- Add temporal filtering to examine sightings by decade or specific time periods
-- Implement statistical analysis of proximity between sightings and military installations
-- Incorporate additional data such as sighting descriptions and categorizations
-- Add responsive design for better mobile viewing experience
 
 ## About the Project
 
