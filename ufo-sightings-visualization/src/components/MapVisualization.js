@@ -226,33 +226,34 @@ const MapVisualization = ({ ufoData, militaryBaseData, usMapData }) => {
     // Add color legend for states
     const legendWidth = 200;
     const legendHeight = 15;
-    const legendX = dimensions.width - legendWidth - 20;
-    const legendY = dimensions.height - 40;
+    const legendX = dimensions.width - legendWidth - 40; // Position from right
+    const legendY = dimensions.height - legendHeight - 40; // Position from bottom
 
+    // Create vertical scale for the legend
     const legendScale = d3.scaleLinear()
-      .domain([0, d3.max(Array.from(sightingsByState.values()))])
-      .range([0, legendWidth]);
-      
-    const legendAxis = d3.axisBottom(legendScale)
+      .domain([d3.max(Array.from(sightingsByState.values())), 0]) // Reversed for vertical
+      .range([0, legendHeight]);
+    
+    const legendAxis = d3.axisRight(legendScale)
       .ticks(5)
       .tickFormat(d3.format(",.0f"));
 
-    // Create gradient for legend
+    // Create gradient for legend - vertical version
     const defs = svg.append('defs');
     const gradient = defs.append('linearGradient')
       .attr('id', 'sightings-gradient')
       .attr('x1', '0%')
-      .attr('y1', '0%')
-      .attr('x2', '100%')
-      .attr('y2', '0%');
+      .attr('y1', '100%') // Start at bottom
+      .attr('x2', '0%')
+      .attr('y2', '0%');  // End at top
 
     gradient.selectAll('stop')
       .data([0, 0.2, 0.4, 0.6, 0.8, 1])
       .join('stop')
-      .attr('offset', d => d * 100 + '%')
+      .attr('offset', d => (1-d) * 100 + '%') // Reverse offset for vertical
       .attr('stop-color', d => colorScale(d * d3.max(Array.from(sightingsByState.values()))));
 
-    // Add legend rectangle with gradient
+    // Add legend rectangle with gradient - vertical
     svg.append('rect')
       .attr('x', legendX)
       .attr('y', legendY)
@@ -260,16 +261,16 @@ const MapVisualization = ({ ufoData, militaryBaseData, usMapData }) => {
       .attr('height', legendHeight)
       .style('fill', 'url(#sightings-gradient)');
 
-    // Add legend axis
+    // Add legend axis - on right side for vertical
     svg.append('g')
-      .attr('transform', `translate(${legendX}, ${legendY + legendHeight})`)
+      .attr('transform', `translate(${legendX + legendWidth}, ${legendY})`)
       .call(legendAxis)
       .attr('font-size', '10px');
 
-    // Add legend title
+    // Add legend title - rotated for vertical
     svg.append('text')
-      .attr('x', legendX)
-      .attr('y', legendY - 5)
+      .attr('transform', `translate(${legendX - 5}, ${legendY + legendHeight/2}) rotate(-90)`)
+      .attr('text-anchor', 'middle')
       .attr('font-size', '12px')
       .text('UFO Sightings by State');
     
