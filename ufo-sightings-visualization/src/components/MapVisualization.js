@@ -227,7 +227,7 @@ const MapVisualization = ({ ufoData, militaryBaseData, usMapData }) => {
     const legendWidth = 200;
     const legendHeight = 15;
     const legendX = dimensions.width - legendWidth - 20;
-    const legendY = dimensions.height - 100;
+    const legendY = dimensions.height - 40;
 
     const legendScale = d3.scaleLinear()
       .domain([0, d3.max(Array.from(sightingsByState.values()))])
