@@ -1,23 +1,23 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "b9a65a07145f79d9f4983eb763d0770a",
+    "revision": "b7efdf9d701ed85fd25a62ce55085898",
     "url": "/UFO/index.html"
   },
   {
-    "revision": "b54901fcd2d3e9bdb5af",
+    "revision": "546b360a5aab6ed2c73f",
     "url": "/UFO/static/css/main.22fa1222.chunk.css"
   },
   {
-    "revision": "7c5c415b13318b66acc4",
-    "url": "/UFO/static/js/2.7e2a5afa.chunk.js"
+    "revision": "25d816dc337276a6f764",
+    "url": "/UFO/static/js/2.cbcbb495.chunk.js"
   },
   {
     "revision": "a734611c61edbd8959bc",
     "url": "/UFO/static/js/3.7b0de3fe.chunk.js"
   },
   {
-    "revision": "b54901fcd2d3e9bdb5af",
-    "url": "/UFO/static/js/main.e5049e7a.chunk.js"
+    "revision": "546b360a5aab6ed2c73f",
+    "url": "/UFO/static/js/main.b67b9fc8.chunk.js"
   },
   {
     "revision": "73dbff729e0e7b1b9efc",
