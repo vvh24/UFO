@@ -38,7 +38,7 @@ function App() {
         
         // Load military bases data
         console.log("Fetching military bases data...");
-        const basesResponse = await fetch(`${process.env.PUBLIC_URL}/data/military-bases-expanded.csv`);
+        const basesResponse = await fetch(`${process.env.PUBLIC_URL}/data/military-bases.csv`);
         if (!basesResponse.ok) {
           throw new Error(`Failed to load military bases data: ${basesResponse.status} ${basesResponse.statusText}`);
         }
