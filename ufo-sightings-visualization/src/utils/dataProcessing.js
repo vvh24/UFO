@@ -44,3 +44,23 @@ export const processMilitaryBaseData = (csvText) => {
     };
   });
 };
+
+export const processNuclearReactorData = (csvText) => {
+    const results = Papa.parse(csvText, {
+      header: true,
+      skipEmptyLines: true,
+      dynamicTyping: true,
+    });
+    
+    return results.data.filter(reactor => {
+      return reactor.latitude && reactor.longitude;
+    }).map(reactor => {
+      return {
+        name: reactor.name,
+        state: reactor.state,
+        latitude: parseFloat(reactor.latitude),
+        longitude: parseFloat(reactor.longitude),
+        type: reactor.type || "Nuclear Facility"
+      };
+    });
+  };
