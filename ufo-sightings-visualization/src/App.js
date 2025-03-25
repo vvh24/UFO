@@ -167,8 +167,7 @@ function App() {
             <div className="chart-description">
               <h3>State-by-State Analysis</h3>
               <p>California leads with over 10,000 reported sightings, more than double any other state.
-              The "Unknown State" category represents reports without location data. Coastal states 
-              generally show higher reporting rates, with Washington, Florida, and Texas all in the top five.
+              Coastal states generally show higher reporting rates, with Washington, Florida, and Texas all in the top five.
               Population centers appear to correlate with higher reporting frequencies.</p>
             </div>
           </div>
