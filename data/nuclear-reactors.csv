@@ -1,0 +1,52 @@
+name,state,latitude,longitude,type
+Indian Point,NY,41.2697,-73.9522,Power Plant
+Diablo Canyon,CA,35.2108,-120.8558,Power Plant
+Palo Verde,AZ,33.3878,-112.8647,Power Plant
+Browns Ferry,AL,34.7037,-87.1189,Power Plant
+Sequoyah,TN,35.2261,-85.0917,Power Plant
+Watts Bar,TN,35.6022,-84.7895,Power Plant
+Vogtle,GA,33.1417,-81.7647,Power Plant
+Turkey Point,FL,25.4344,-80.3308,Power Plant
+Seabrook,NH,42.8992,-70.8508,Power Plant
+Calvert Cliffs,MD,38.4322,-76.4417,Power Plant
+Salem,NJ,39.4628,-75.5358,Power Plant
+Limerick,PA,40.2261,-75.5867,Power Plant
+Three Mile Island,PA,40.1531,-76.7236,Decommissioned
+Peach Bottom,PA,39.7592,-76.2697,Power Plant
+Susquehanna,PA,41.0889,-76.1478,Power Plant
+Oyster Creek,NJ,39.8142,-74.2064,Decommissioned
+Millstone,CT,41.3114,-72.1678,Power Plant
+Nine Mile Point,NY,43.5214,-76.4081,Power Plant
+Ginna,NY,43.2778,-77.3089,Power Plant
+Beaver Valley,PA,40.6233,-80.4328,Power Plant
+Perry,OH,41.8008,-81.1436,Power Plant
+Davis-Besse,OH,41.5972,-83.0864,Power Plant
+Fermi,MI,41.9628,-83.2578,Power Plant
+Palisades,MI,42.3236,-86.3153,Decommissioned
+Cook,MI,41.9756,-86.5658,Power Plant
+Clinton,IL,40.1722,-88.8344,Power Plant
+La Salle,IL,41.2447,-88.6722,Power Plant
+Dresden,IL,41.3897,-88.2711,Power Plant
+Braidwood,IL,41.2422,-88.2294,Power Plant
+Byron,IL,42.0744,-89.2819,Power Plant
+Quad Cities,IL,41.7264,-90.3108,Power Plant
+Duane Arnold,IA,42.1008,-91.7772,Decommissioned
+Monticello,MN,45.3336,-93.8483,Power Plant
+Prairie Island,MN,44.6219,-92.6331,Power Plant
+Point Beach,WI,44.2808,-87.5361,Power Plant
+Kewaunee,WI,44.3431,-87.5361,Decommissioned
+Columbia,WA,46.4714,-119.3431,Power Plant
+Wolf Creek,KS,38.2363,-95.6889,Power Plant
+Cooper,NE,40.3622,-95.6406,Power Plant
+Fort Calhoun,NE,41.5203,-96.0769,Decommissioned
+Callaway,MO,38.7622,-91.7797,Power Plant
+Arkansas Nuclear One,AR,35.3103,-93.2308,Power Plant
+Grand Gulf,MS,32.0072,-91.0481,Power Plant
+River Bend,LA,30.7572,-91.3333,Power Plant
+Waterford,LA,29.9953,-90.4717,Power Plant
+South Texas,TX,28.7953,-96.0489,Power Plant
+Comanche Peak,TX,32.2983,-97.7856,Power Plant
+Idaho National Laboratory,ID,43.5392,-112.9597,Research Facility
+Los Alamos National Laboratory,NM,35.8808,-106.3031,Research Facility
+Hanford Site,WA,46.5500,-119.4881,Research Facility
+Oak Ridge National Laboratory,TN,35.9306,-84.3100,Research Facility
