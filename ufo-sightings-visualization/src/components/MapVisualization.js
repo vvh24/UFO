@@ -3,7 +3,7 @@ import * as d3 from 'd3';
 import * as topojson from 'topojson-client';
 import '../styles/components/MapVisualization.css';
 
-const MapVisualization = ({ ufoData, militaryBaseData, usMapData }) => {
+const MapVisualization = ({ ufoData, militaryBaseData, nuclearReactorData, usMapData }) => {
   const svgRef = useRef();
   const tooltipRef = useRef();
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
@@ -223,6 +223,77 @@ const MapVisualization = ({ ufoData, militaryBaseData, usMapData }) => {
         });
     }
     
+    // Add nuclear reactors
+    if (nuclearReactorData.length > 0) {
+        svg.append('g')
+        .selectAll('circle')
+        .data(nuclearReactorData)
+        .join('circle')
+        .attr('cx', d => {
+            const coords = projection([d.longitude, d.latitude]);
+            if (!coords) return null; // Skip this point if projection returns null
+            return coords[0];
+        })
+        .attr('cy', d => {
+            const coords = projection([d.longitude, d.latitude]);
+            if (!coords) return null; // Skip this point if projection returns null
+            return coords[1];
+        })
+        .attr('r', 6)
+        .attr('fill', 'rgba(50, 205, 50, 0.7)') // Green color for nuclear reactors
+        .attr('stroke', 'rgba(0, 100, 0, 0.9)')
+        .attr('stroke-width', 1.5)
+        .attr('class', 'nuclear-reactor')
+        .on('mouseover', function(event, d) {
+            d3.select(this)
+            .attr('r', 9)
+            .attr('fill', 'rgba(50, 205, 50, 0.9)');
+            
+            tooltip
+            .style('opacity', 1)
+            .html(`
+                <strong>Nuclear Facility</strong><br>
+                Name: ${d.name || 'Unknown'}<br>
+                State: ${d.state || 'N/A'}<br>
+                Type: ${d.type || 'Nuclear Facility'}
+            `)
+            .style('left', (event.pageX + 10) + 'px')
+            .style('top', (event.pageY - 28) + 'px');
+        })
+        .on('mouseout', function() {
+            d3.select(this)
+            .attr('r', 6)
+            .attr('fill', 'rgba(50, 205, 50, 0.7)');
+            
+            tooltip.style('opacity', 0);
+        });
+    }
+
+    // Add circular buffers around nuclear reactors (50km radius)
+    if (nuclearReactorData.length > 0) {
+        const bufferRadius = 50; // km
+        const earthRadius = 6371; // km
+        
+        nuclearReactorData.forEach(reactor => {
+        // Convert buffer radius from km to degrees (approximate)
+        const bufferRadiusDegrees = (bufferRadius / earthRadius) * (180 / Math.PI);
+        
+        // Draw circle
+        const circle = d3.geoCircle()
+            .center([reactor.longitude, reactor.latitude])
+            .radius(bufferRadiusDegrees);
+        
+        svg.append('path')
+            .datum(circle())
+            .attr('d', path)
+            .attr('fill', 'rgba(50, 205, 50, 0.1)')
+            .attr('stroke', 'rgba(50, 205, 50, 0.4)')
+            .attr('stroke-width', 1)
+            .attr('stroke-dasharray', '5,5')
+            .attr('class', 'reactor-buffer');
+        });
+    }
+    
     // Add color legend for states
     const legendWidth = 200;
     const legendHeight = 15;
@@ -276,6 +347,7 @@ const MapVisualization = ({ ufoData, militaryBaseData, usMapData }) => {
     // Add main legend with UFO and military base symbols
     const mainLegend = svg.append('g')
       .attr('transform', `translate(20, ${dimensions.height - 80})`);
+    
       
     // UFO sightings legend
     mainLegend.append('circle')
@@ -291,7 +363,7 @@ const MapVisualization = ({ ufoData, militaryBaseData, usMapData }) => {
       .attr('y', 15)
       .text('UFO Sighting')
       .attr('font-size', '12px');
-      
+       
     // Military base legend  
     mainLegend.append('path')
       .attr('transform', 'translate(10, 40)')
@@ -305,8 +377,23 @@ const MapVisualization = ({ ufoData, militaryBaseData, usMapData }) => {
       .attr('y', 45)
       .text('Military Base')
       .attr('font-size', '12px');
-      
-  }, [usMapData, ufoData, militaryBaseData, dimensions]);
+    
+    // Nuclear reactor legend
+    mainLegend.append('circle')
+      .attr('cx', 10)
+      .attr('cy', 70) // Position below military base entry
+      .attr('r', 6)
+      .attr('fill', 'rgba(50, 205, 50, 0.7)')
+      .attr('stroke', 'rgba(0, 100, 0, 0.9)')
+      .attr('stroke-width', 1.5);
+    
+    mainLegend.append('text')
+      .attr('x', 25)
+      .attr('y', 75) // Position below military base entry
+      .text('Nuclear Reactor')
+      .attr('font-size', '12px');
+
+  }, [usMapData, ufoData, militaryBaseData, nuclearReactorData, dimensions]);
   
   return (
     <div className="map-container">

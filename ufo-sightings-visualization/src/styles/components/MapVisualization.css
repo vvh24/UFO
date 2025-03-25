@@ -37,3 +37,15 @@
   .military-base {
     transition: fill 0.2s;
   }
+
+  .nuclear-reactor {
+    transition: r 0.2s, fill 0.2s;
+  }
+  
+  .nuclear-reactor:hover {
+    cursor: pointer;
+  }
+  
+  .reactor-buffer {
+    pointer-events: none;
+  }
