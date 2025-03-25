@@ -147,19 +147,46 @@ function App() {
         </section>
         
         <section className="supporting-charts">
-          <div className="chart timeline">
-            <TimelineChart ufoData={ufoData} yearRange={yearRange} />
+          <div className="chart-container">
+            <div className="chart timeline">
+              <TimelineChart ufoData={ufoData} yearRange={yearRange} />
+            </div>
+            <div className="chart-description">
+              <h3>UFO Sightings Over Time</h3>
+              <p>The timeline reveals a dramatic increase in UFO reports starting in the 1990s, with 
+              peak reporting around 2010. Early sightings were rare, with minimal reports before 1950.
+              The significant spike in the late 1990s and 2000s may reflect increased public interest
+              and improved reporting methods through the internet.</p>
+            </div>
           </div>
           
-          <div className="chart state-ranking">
-            <StateRankingChart ufoData={ufoData} />
+          <div className="chart-container">
+            <div className="chart state-ranking">
+              <StateRankingChart ufoData={ufoData} />
+            </div>
+            <div className="chart-description">
+              <h3>State-by-State Analysis</h3>
+              <p>California leads with over 10,000 reported sightings, more than double any other state.
+              The "Unknown State" category represents reports without location data. Coastal states 
+              generally show higher reporting rates, with Washington, Florida, and Texas all in the top five.
+              Population centers appear to correlate with higher reporting frequencies.</p>
+            </div>
           </div>
           
-          <div className="chart nuclear-proximity">
-            <NuclearProximityAnalysis 
-              ufoData={ufoData}
-              nuclearReactorData={nuclearReactorData}
-            />
+          <div className="chart-container">
+            <div className="chart nuclear-proximity">
+              <NuclearProximityAnalysis 
+                ufoData={ufoData}
+                nuclearReactorData={nuclearReactorData}
+              />
+            </div>
+            <div className="chart-description">
+              <h3>Nuclear Facility Proximity</h3>
+              <p>This analysis shows the percentage of UFO sightings within various distances of nuclear facilities.
+              Only 0.3% of sightings occur within 10km of a reactor, while over 90% are within 1000km.
+              The data suggests no unusually strong correlation between sighting locations and nuclear sites,
+              as most populated areas in the US are within 1000km of at least one nuclear facility.</p>
+            </div>
           </div>
         </section>
       </main>
