@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/UFO/static/css/main.58b11fb3.chunk.css",
-    "main.js": "/UFO/static/js/main.1a8a42cb.chunk.js",
-    "main.js.map": "/UFO/static/js/main.1a8a42cb.chunk.js.map",
+    "main.js": "/UFO/static/js/main.861672da.chunk.js",
+    "main.js.map": "/UFO/static/js/main.861672da.chunk.js.map",
     "runtime~main.js": "/UFO/static/js/runtime~main.f30f5b29.js",
     "runtime~main.js.map": "/UFO/static/js/runtime~main.f30f5b29.js.map",
     "static/js/2.2ea7790e.chunk.js": "/UFO/static/js/2.2ea7790e.chunk.js",
@@ -10,7 +10,7 @@
     "static/js/3.fb4a1bca.chunk.js": "/UFO/static/js/3.fb4a1bca.chunk.js",
     "static/js/3.fb4a1bca.chunk.js.map": "/UFO/static/js/3.fb4a1bca.chunk.js.map",
     "index.html": "/UFO/index.html",
-    "precache-manifest.b66308dd656bf87499dd7593072e8e55.js": "/UFO/precache-manifest.b66308dd656bf87499dd7593072e8e55.js",
+    "precache-manifest.e2a03c4721f6ba637ad14d26cc13b332.js": "/UFO/precache-manifest.e2a03c4721f6ba637ad14d26cc13b332.js",
     "service-worker.js": "/UFO/service-worker.js",
     "static/css/main.58b11fb3.chunk.css.map": "/UFO/static/css/main.58b11fb3.chunk.css.map"
   }
