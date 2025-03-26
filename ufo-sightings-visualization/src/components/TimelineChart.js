@@ -13,7 +13,7 @@ const TimelineChart = ({ ufoData, yearRange }) => {
       const containerWidth = svgRef.current.parentElement.clientWidth;
       setDimensions({
         width: containerWidth,
-        height: 300, // Fixed height
+        height: 400, // Updated to match StateRankingChart height
       });
     };
     
